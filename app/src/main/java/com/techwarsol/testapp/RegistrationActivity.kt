@@ -24,13 +24,15 @@ class RegistrationActivity : AppCompatActivity() {
         setDatePicker()
         setUpProvince()
 
-        val txtUserName = binding.etUserName.text.toString()
-        val txtEmail = binding.etEmail.text.toString()
-        val txtPassword = binding.etPassword.text.toString()
-        val txtPhone = binding.etPhone.text.toString()
-        val txtDOB = binding.etDOB.text.toString()
 
         binding.btnSignUp.setOnClickListener {
+
+            val txtUserName = binding.etUserName.text.toString()
+            val txtEmail = binding.etEmail.text.toString()
+            val txtPassword = binding.etPassword.text.toString()
+            val txtPhone = binding.etPhone.text.toString()
+            val txtDOB = binding.etDOB.text.toString()
+
 
             if (txtUserName.isEmpty()) {
 
