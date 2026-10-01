@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <TextView
@@ -21,6 +21,26 @@
 
 
     <EditText
+        android:layout_alignParentLeft="true"
+        android:id="@+id/txtFirstName"
+        android:layout_below="@+id/welcomText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:hint="First Name" />
+
+    <EditText
+        android:layout_alignParentRight="true"
+        android:id="@+id/lastName"
+        android:layout_below="@+id/welcomText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:hint="Last Name" />
+
+
+    <EditText
+        android:layout_below="@+id/txtFirstName"
         android:id="@+id/etLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +49,7 @@
 
 
     <EditText
+        android:layout_below="@+id/etLoginEmail"
         android:id="@+id/etLoginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,6 +59,7 @@
 
 
     <Button
+        android:layout_below="@+id/etLoginPassword"
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,4 +68,4 @@
         android:text="Login" />
 
 
-</LinearLayout>
+</RelativeLayout>

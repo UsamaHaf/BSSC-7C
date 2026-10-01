@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
@@ -17,9 +18,13 @@ class LoginActivity : AppCompatActivity() {
     lateinit var etLoginPassword: EditText
     lateinit var btnLogin: Button
 
+    lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        auth = FirebaseAuth.getInstance()
 
         welcomText = findViewById<TextView>(R.id.welcomText)
         etLoginEmail = findViewById<EditText>(R.id.etLoginEmail)
@@ -40,7 +45,19 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter All Fields", Toast.LENGTH_LONG).show()
             }else {
 
-                Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
+                auth.signInWithEmailAndPassword(email , password)
+                    .addOnCompleteListener {result ->
+
+                        if(result.isSuccessful){
+                            Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
+
+                        }else{
+                            Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+
+                        }
+
+                    }
+
 
             }
 

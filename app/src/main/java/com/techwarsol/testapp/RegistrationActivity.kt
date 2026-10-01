@@ -3,10 +3,11 @@ package com.techwarsol.testapp
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.techwarsol.testapp.databinding.ActivityRegistrationBinding
 import java.util.Calendar
 
@@ -14,12 +15,16 @@ class RegistrationActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegistrationBinding
 
+    lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
 
         setDatePicker()
         setUpProvince()
@@ -46,13 +51,34 @@ class RegistrationActivity : AppCompatActivity() {
 
             } else {
 
-                val intent = Intent(this@RegistrationActivity , LoginActivity::class.java)
+                binding.pbLoader.visibility = View.VISIBLE
+                binding.btnSignUp.visibility = View.GONE
 
-                intent.putExtra("welcomeTxt" , "Welcome Mr ${txtUserName}")
+                auth.createUserWithEmailAndPassword(txtEmail , txtPassword)
+                    .addOnCompleteListener { result ->
+                        if(result.isSuccessful){
 
-                startActivity(intent)
+                            binding.pbLoader.visibility = View.GONE
+                            binding.btnSignUp.visibility = View.VISIBLE
 
-                Toast.makeText(this@RegistrationActivity, "Success", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@RegistrationActivity , LoginActivity::class.java)
+                            intent.putExtra("welcomeTxt" , "Welcome Mr ${txtUserName}")
+                            startActivity(intent)
+                            Toast.makeText(this@RegistrationActivity, "Registration Success", Toast.LENGTH_SHORT).show()
+
+                        }else{
+
+                            binding.pbLoader.visibility = View.GONE
+                            binding.btnSignUp.visibility = View.VISIBLE
+
+                            Toast.makeText(this@RegistrationActivity, "Registration Failed", Toast.LENGTH_SHORT).show()
+
+                        }
+                    }
+
+
+
+
 
             }
         }
