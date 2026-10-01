@@ -48,6 +48,8 @@
             android:textSize="18sp" />
 
         <EditText
+            android:padding="8dp"
+            android:background="@drawable/edittext_bg"
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
