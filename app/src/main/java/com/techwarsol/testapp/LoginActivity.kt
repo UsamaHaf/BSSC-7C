@@ -1,5 +1,6 @@
 package com.techwarsol.testapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -49,6 +50,13 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener {result ->
 
                         if(result.isSuccessful){
+
+                            val intent = Intent(
+                                this@LoginActivity,
+                                HomePageActivity::class.java
+                            )
+                            startActivity(intent)
+
                             Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
 
                         }else{

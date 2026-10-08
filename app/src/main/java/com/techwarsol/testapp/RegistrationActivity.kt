@@ -8,14 +8,17 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.techwarsol.testapp.Model.User
 import com.techwarsol.testapp.databinding.ActivityRegistrationBinding
 import java.util.Calendar
 
 class RegistrationActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegistrationBinding
-
     lateinit var auth: FirebaseAuth
+
+    lateinit var database: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +28,18 @@ class RegistrationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
 
         setDatePicker()
         setUpProvince()
+
+        binding.alreadyAcc.setOnClickListener {
+            val intent = Intent(
+                this@RegistrationActivity,
+                LoginActivity::class.java
+            )
+            startActivity(intent)
+        }
 
 
         binding.btnSignUp.setOnClickListener {
@@ -54,30 +66,64 @@ class RegistrationActivity : AppCompatActivity() {
                 binding.pbLoader.visibility = View.VISIBLE
                 binding.btnSignUp.visibility = View.GONE
 
-                auth.createUserWithEmailAndPassword(txtEmail , txtPassword)
+                auth.createUserWithEmailAndPassword(txtEmail, txtPassword)
                     .addOnCompleteListener { result ->
-                        if(result.isSuccessful){
+                        if (result.isSuccessful) {
 
                             binding.pbLoader.visibility = View.GONE
                             binding.btnSignUp.visibility = View.VISIBLE
 
-                            val intent = Intent(this@RegistrationActivity , LoginActivity::class.java)
-                            intent.putExtra("welcomeTxt" , "Welcome Mr ${txtUserName}")
-                            startActivity(intent)
-                            Toast.makeText(this@RegistrationActivity, "Registration Success", Toast.LENGTH_SHORT).show()
+                            val uid = auth.currentUser?.uid
 
-                        }else{
+                            if (uid != null) {
+                                database.reference.child("user").child(uid)
+                                    .setValue(
+                                        User(
+                                            txtUserName,
+                                            txtEmail,
+                                            txtPhone,
+                                            txtDOB,
+                                            txtPassword
+                                        )
+                                    )
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+
+                                            val intent = Intent(
+                                                this@RegistrationActivity,
+                                                LoginActivity::class.java
+                                            )
+                                            intent.putExtra("welcomeTxt", "Welcome Mr $txtUserName")
+                                            startActivity(intent)
+                                            Toast.makeText(
+                                                this@RegistrationActivity,
+                                                "Registration Success",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                        } else {
+                                            Toast.makeText(
+                                                this@RegistrationActivity,
+                                                "Registration Failed",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                            }
+
+                        } else {
 
                             binding.pbLoader.visibility = View.GONE
                             binding.btnSignUp.visibility = View.VISIBLE
 
-                            Toast.makeText(this@RegistrationActivity, "Registration Failed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@RegistrationActivity,
+                                "Registration Failed",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
                         }
                     }
-
-
-
 
 
             }
@@ -90,7 +136,8 @@ class RegistrationActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(
             this,
             androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-            province)
+            province
+        )
 
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
         binding.provinceList.adapter = adapter
