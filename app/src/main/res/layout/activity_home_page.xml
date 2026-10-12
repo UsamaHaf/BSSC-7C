@@ -9,11 +9,11 @@
     tools:context=".HomePageActivity">
 
     <LinearLayout
-        android:layout_marginTop="32dp"
-        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:orientation="horizontal"
+        android:padding="8dp"
         android:weightSum="4">
 
         <ImageView
@@ -24,14 +24,14 @@
             android:src="@drawable/hambuger" />
 
         <TextView
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_weight="2.5"
-            android:text="Home Page" />
+            android:gravity="center"
+            android:text="Home Page"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="0dp"
@@ -109,9 +109,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:text="Add Product" />
+
+        <ProgressBar
+            android:id="@+id/pbAddProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
     </LinearLayout>
-
-
 
 
 </LinearLayout>
