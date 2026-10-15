@@ -8,3 +8,4 @@ data class Product(
     var proPrice: Double = 0.0,
     var proStock: Int = 0,
 )
+
