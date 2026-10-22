@@ -19,10 +19,6 @@ public class ProductsAdapter(private val productList: ArrayList<Product>) :
         parent: ViewGroup,
         viewType: Int
     ): ProductViewHolder {
-
-     /*   val view = LayoutInflater.from(parent.context) .inflate(R.layout.item_product, parent, false)
-
-        return  view;*/
         val binding = ItemProductBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(binding)
@@ -35,10 +31,7 @@ public class ProductsAdapter(private val productList: ArrayList<Product>) :
         val product = productList[position]
         holder.binding.apply {
             tvItemName.text = product.proName
-            tvItemDescription.text = product.proDesc
-            tvItemCategory.text = product.proCategory
             tvItemPrice.text = "PKR. ${product.proPrice}"
-            tvItemStock.text = "${product.proStock}"
 
         }
     }

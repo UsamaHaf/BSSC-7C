@@ -40,32 +40,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvItemCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Category"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/tvItemDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Product description goes here..."
-            android:textColor="#555555"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tvItemStock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Stock: 0"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

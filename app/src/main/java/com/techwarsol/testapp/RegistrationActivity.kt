@@ -76,7 +76,8 @@ class RegistrationActivity : AppCompatActivity() {
                             val uid = auth.currentUser?.uid
 
                             if (uid != null) {
-                                database.reference.child("user").child(uid)
+                                database.reference.child("user")
+                                    .child(uid)
                                     .setValue(
                                         User(
                                             txtUserName,
