@@ -2,15 +2,17 @@ package com.techwarsol.testapp.Adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.techwarsol.testapp.Interfaces.onUserClickListener
 import com.techwarsol.testapp.Model.ApiUser
 import com.techwarsol.testapp.Model.UserResponse
 import com.techwarsol.testapp.R
 import com.techwarsol.testapp.databinding.ListItemApiUserBinding
 
-class ApiUserAdapter (private var userList: ArrayList<ApiUser>):
+class ApiUserAdapter (private var userList: ArrayList<ApiUser>, private val listener: onUserClickListener):
     RecyclerView.Adapter<ApiUserAdapter.UserViewHolder>() {
 
     class UserViewHolder(val binding: ListItemApiUserBinding):
@@ -41,6 +43,14 @@ class ApiUserAdapter (private var userList: ArrayList<ApiUser>):
             .placeholder(R.drawable.logout)
             .error(R.drawable.account)
             .into(holder.binding.ivUserAvatar)
+
+        holder.itemView.setOnClickListener {
+            //Toast.makeText(holder.itemView.context, "Adapter CLick Check", Toast.LENGTH_SHORT).show()
+
+            listener.onUserClick(user)
+        }
+
+
 
     }
 

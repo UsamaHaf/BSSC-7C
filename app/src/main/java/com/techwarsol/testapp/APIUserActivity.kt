@@ -7,13 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.techwarsol.testapp.Adapters.ApiUserAdapter
 import com.techwarsol.testapp.Model.ApiUser
 import com.techwarsol.testapp.Model.UserResponse
-import com.techwarsol.testapp.NetworkCall.RetrofitClient
+import com.techwarsol.testapp.Interfaces.RetrofitClient
+import com.techwarsol.testapp.Interfaces.onUserClickListener
 import com.techwarsol.testapp.databinding.ActivityApiuserBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class APIUserActivity : AppCompatActivity() {
+class APIUserActivity : AppCompatActivity(), onUserClickListener {
 
     lateinit var binding: ActivityApiuserBinding
      var userList = ArrayList<ApiUser>()
@@ -26,7 +27,7 @@ class APIUserActivity : AppCompatActivity() {
         binding = ActivityApiuserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userAdapter = ApiUserAdapter(userList)
+        userAdapter = ApiUserAdapter(userList, this)
         binding.rvApiUser.adapter = userAdapter
 
 
@@ -68,5 +69,9 @@ class APIUserActivity : AppCompatActivity() {
         })
 
 
+    }
+
+    override fun onUserClick(user: ApiUser) {
+        Toast.makeText(this, user.firstName + " " + user.id, Toast.LENGTH_SHORT).show()
     }
 }
